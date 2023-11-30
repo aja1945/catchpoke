@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Catch Pokemon</h2>
+  <p>{{ pokemon.name }}</p>
+
+  {% if current_user.can_catch_pokemon() %}
+    <form method="post" action="{{ url_for('catch_pokemon', pokemon_id=pokemon.id) }}">
+      {{ form.hidden_tag() }}
+      <div class="form-group">
+        {{ form.nickname.label(class="form-control-label") }}
+        {{ form.nickname(class="form-control") }}
+      </div>
+      <div class="form-group">
+        {{ form.submit(class="btn btn-primary") }}
+      </div>
+    </form>
+  {% else %}
+    <p>You have reached the maximum number of Pokemon in your collection.</p>
+  {% endif %}
+  
+  <a href="{{ url_for('pokemon_list') }}">Back to Pokemon List</a>
+{% endblock %}
